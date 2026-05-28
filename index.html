@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Viviana Palacios — Senior Product Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --subtle: #e8e6e1;
+      --accent: #2d6a4f;
+      --accent-light: #f0f7f4;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 72px 0;
+      border-bottom: 1px solid var(--subtle);
+    }
+    section:last-of-type { border-bottom: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(250, 250, 249, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--subtle);
+      z-index: 100;
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-name {
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    #hero {
+      padding: 96px 0 80px;
+      border-bottom: 1px solid var(--subtle);
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 52px);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+    h1 strong { font-weight: 600; }
+
+    .hero-bio {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 600px;
+      margin-bottom: 36px;
+    }
+
+    .hero-bio p + p { margin-top: 16px; }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .contact-link:hover { color: var(--accent); }
+
+    .contact-link svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    /* ── Section headings ── */
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 40px;
+    }
+
+    /* ── Experience ── */
+    .job + .job { margin-top: 52px; }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+
+    .job-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .job-dates {
+      font-size: 13px;
+      color: var(--muted);
+      white-space: nowrap;
+      padding-top: 2px;
+    }
+
+    .job-company {
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+
+    .job-summary {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 14px;
+      line-height: 1.65;
+    }
+
+    .job-highlights {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .job-highlights li {
+      font-size: 14px;
+      color: var(--text);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .job-highlights li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--subtle);
+    }
+
+    /* ── Achievements ── */
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .achievement-card {
+      background: var(--accent-light);
+      border-radius: 8px;
+      padding: 24px;
+    }
+
+    .achievement-stat {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .achievement-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    /* ── Education ── */
+    .edu-item + .edu-item { margin-top: 28px; }
+
+    .edu-degree {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .edu-school {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    /* ── Skills ── */
+    .skills-groups {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .skills-group-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .skills-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 4px;
+      padding: 4px 10px;
+      letter-spacing: 0.01em;
+    }
+
+    /* ── LinkedIn posts ── */
+    .posts-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    .post-card {
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 28px;
+      background: var(--surface);
+      transition: border-color 0.15s;
+    }
+    .post-card:hover { border-color: #c4bdb5; }
+
+    .post-date {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .post-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      white-space: pre-line;
+    }
+
+    .post-link {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .post-link:hover { text-decoration: underline; }
+
+    .post-placeholder {
+      font-size: 13px;
+      color: var(--muted);
+      font-style: italic;
+      text-align: center;
+      padding: 40px 24px;
+      border: 1px dashed var(--subtle);
+      border-radius: 8px;
+    }
+
+    /* ── Job progression ── */
+    .job-progression {
+      font-size: 12px;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 3px;
+    }
+
+    /* ── Case Studies ── */
+    .case-study {
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .cs-header { padding: 28px 28px 24px; }
+
+    .cs-meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .cs-company {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .cs-type {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      background: var(--subtle);
+      border-radius: 3px;
+      padding: 2px 8px;
+      letter-spacing: 0.04em;
+    }
+
+    .cs-title {
+      font-size: 19px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .cs-overview {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    details.cs-details summary {
+      list-style: none;
+      padding: 14px 28px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      cursor: pointer;
+      border-top: 1px solid var(--subtle);
+      background: var(--accent-light);
+      user-select: none;
+    }
+    details.cs-details summary::-webkit-details-marker { display: none; }
+    details.cs-details summary::after { content: ' ↓'; }
+    details.cs-details[open] summary { border-bottom: 1px solid var(--subtle); }
+    details.cs-details[open] summary::after { content: ' ↑'; }
+
+    .cs-body {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .cs-section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .cs-section-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .cs-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .cs-bullets li {
+      font-size: 14px;
+      color: var(--text);
+      padding-left: 16px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .cs-bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: #c4bdb5;
+    }
+
+    .cs-phases {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .cs-phase {
+      background: var(--bg);
+      border-radius: 6px;
+      padding: 16px;
+    }
+
+    .cs-phase-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 7px;
+    }
+
+    .cs-phase-text {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .cs-metrics-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .cs-metric {
+      background: var(--accent-light);
+      border-radius: 6px;
+      padding: 14px 16px;
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .cs-metric-type {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 5px;
+    }
+
+    @media (max-width: 560px) {
+      .cs-phases { grid-template-columns: 1fr; }
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 560px) {
+      section { padding: 52px 0; }
+      .job-header { flex-direction: column; gap: 4px; }
+      .achievements-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <a class="nav-name" href="#hero">Viviana Palacios</a>
+      <ul class="nav-links">
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#case-studies">Case Studies</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#writing">Writing</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="container">
+      <p class="eyebrow">Senior Product Manager</p>
+      <h1>I build products<br>at the <strong>infrastructure layer.</strong></h1>
+      <div class="hero-bio">
+        <p>
+          I started my career as a software engineer — four years building production systems in Ruby,
+          Java, and Android. I wasn't in a hurry to leave. Understanding how things actually work from
+          the inside felt like a prerequisite, not a detour.
+        </p>
+        <p>
+          From there I moved into project management — not because it was the next rung, but because
+          I was working toward product and knew I needed to understand delivery, cross-functional dynamics,
+          and client relationships before I could own strategy. I also went back for an MBA, because
+          the business side of product — positioning, market strategy, the commercial layer —
+          was something I wanted to understand properly, not approximate.
+        </p>
+        <p>
+          Six years into product management, I work at the intersection of developer experience and
+          infrastructure: which capabilities belong on the API surface, how the response contract should
+          be structured, which use cases warrant a streaming interface over REST, and where exposing too
+          much complexity breaks the developer experience. That's the work at Brightcove, Wowza, and Oracle.
+          That's the work I want to keep doing.
+        </p>
+        <p>
+          Based in San Francisco. Open to senior PM roles in API platforms, developer tools, and
+          B2B infrastructure.
+        </p>
+      </div>
+      <div class="contact-row">
+        <a class="contact-link" href="mailto:viv.delrio@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"/>
+            <path d="m2 7 10 7 10-7"/>
+          </svg>
+          viv.delrio@gmail.com
+        </a>
+        <a class="contact-link" href="https://linkedin.com/in/vivianapalacios" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+            <rect x="2" y="9" width="4" height="12"/>
+            <circle cx="4" cy="4" r="2"/>
+          </svg>
+          linkedin.com/in/vivianapalacios
+        </a>
+        <span class="contact-link">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          San Francisco, CA
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key Numbers -->
+  <section id="highlights">
+    <div class="container">
+      <div class="achievements-grid">
+        <div class="achievement-card">
+          <div class="achievement-stat">1.8M</div>
+          <div class="achievement-desc">Concurrent users on a single live soccer stream in South Korea — orchestrated multi-CDN balancing to keep playback up throughout.</div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-stat">10+</div>
+          <div class="achievement-desc">Years in the industry, starting as a software engineer and moving into product management — never losing the technical lens.</div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-stat">6</div>
+          <div class="achievement-desc">Years as a Product Manager — across Brightcove, Wowza, and Oracle, owning API platforms, streaming infrastructure, and developer-facing products.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience">
+    <div class="container">
+      <p class="section-label">Experience</p>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Senior Product Manager</div>
+          <div class="job-dates">May 2025 – Feb 2026</div>
+        </div>
+        <div class="job-company">Oracle — Zapopan, Mexico</div>
+        <p class="job-summary">
+          Gathered technical requirements and worked directly with engineering to build core functionality
+          for the My Oracle Support internal developer APIs.
+        </p>
+        <ul class="job-highlights">
+          <li>Analyzed developer use case demand profiles to determine the right interface contract — REST endpoints vs. streaming responses — enabling engineering to make informed infrastructure decisions.</li>
+          <li>Translated high-level product direction into clear, actionable development requirements through close partnership with engineering.</li>
+          <li>Coordinated API adoption across multiple internal teams globally, running direct working sessions to understand integration use cases and align on interface contracts.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div class="job-title">Senior Product Manager</div>
+          <div class="job-dates">Jun 2024 – Feb 2025</div>
+        </div>
+        <div class="job-company">Wowza — Remote</div>
+        <p class="job-summary">
+          Shaped a SaaS-based live streaming solution, enhancing developer and user experience
+          and driving customer retention.
+        </p>
+        <ul class="job-highlights">
+          <li>Owned the external API strategy for Wowza's live streaming platform — evaluating which capabilities to expose, optimizing resource fetching patterns, and ensuring the surface was intuitive for developers building on top of it.</li>
+          <li>Led the initiative enabling on-premise customers to seamlessly leverage cloud features, increasing cross-product adoption across Wowza's hybrid user base.</li>
+          <li>Drove product roadmap priorities by synthesizing win/loss analysis and competitive insights with marketing; launched features with OKRs and PostHog success metrics defined upfront.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Staff Product Manager</div>
+            <div class="job-progression">Joined as PM · promoted to Senior PM · then Staff PM</div>
+          </div>
+          <div class="job-dates">Aug 2020 – Jun 2024</div>
+        </div>
+        <div class="job-company">Brightcove — Zapopan, Mexico</div>
+        <p class="job-summary">
+          Principal strategist for VOD streaming backend services — encryption, content delivery,
+          and SSAI — owning the full product lifecycle from discovery through measurement.
+        </p>
+        <ul class="job-highlights">
+          <li>Managed multi-CDN vendor relationships at scale — negotiated commit-tier contracts with Akamai, Edgio, Fastly, and CloudFront, and designed a multi-signal scoring framework for dynamic CDN selection.</li>
+          <li>Applied Fastly edge compute to enforce playback restrictions in real time — geo-blocking, domain allowlisting, and token-based access control executed at the CDN edge before content reached users.</li>
+          <li>Became the single source of truth for the platform's streaming, encryption, and delivery capabilities across engineering, sales, go-to-market, and leadership.</li>
+          <li>Led enterprise customer integration consultations that built trusted advisor relationships — in the room through delivery, not just requirements gathering.</li>
+          <li>Championed dynamic SSAI via build vs. buy analysis; drove the decision to integrate a third-party solution, reducing costs while accelerating time to market.</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div class="job-header">
+          <div>
+            <div class="job-title">Technical Project Manager</div>
+            <div class="job-progression">Software Engineer 2012–2015 · Project Manager 2016–2020</div>
+          </div>
+          <div class="job-dates">Jun 2012 – Aug 2020</div>
+        </div>
+        <div class="job-company">Rever, Michelada.io &amp; Others — Remote / Guadalajara</div>
+        <p class="job-summary">
+          Started as a software engineer building production systems in Ruby, Java, and Android.
+          Transitioned into project management in 2016 — leading cross-functional teams, owning
+          client relationships end-to-end, and scaling agile practices across international teams.
+        </p>
+        <ul class="job-highlights">
+          <li>Managed end-to-end client relationships from requirements discovery through delivery, serving as the primary point of contact for enterprise accounts including Coca-Cola Mexico.</li>
+          <li>Introduced and scaled Scrum ceremonies across international teams, improving delivery velocity and cross-team alignment.</li>
+        </ul>
+      </div>
+
+      <!-- Side Project -->
+      <div class="job" style="margin-top: 52px; padding-top: 40px; border-top: 1px solid var(--subtle);">
+        <p class="section-label" style="margin-bottom: 24px;">Side Project</p>
+        <div class="job-header">
+          <div class="job-title">Product Manager — AI-Powered CRM Agent</div>
+          <div class="job-dates">Jun 2025 – Feb 2026</div>
+        </div>
+        <div class="job-company">Independent Project</div>
+        <p class="job-summary">
+          Led product for an AI agent integration enabling CRM-less customer meeting logging —
+          users capture and retrieve meeting context through a conversational AI agent instead of a traditional CRM.
+        </p>
+        <ul class="job-highlights">
+          <li>Defined MVP scope through user research, identifying core capabilities needed to log and retrieve customer meeting data without a dedicated CRM platform.</li>
+          <li>Translated product vision into detailed AI feature specifications — aligning model behavior (tool use, RAG, context grounding) with user intent and technical feasibility.</li>
+          <li>Established a dual-layer metrics framework: business metrics (adoption, retention, revenue) alongside UX metrics (task completion rate, agent response accuracy, time-to-value).</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Case Studies -->
+  <section id="case-studies">
+    <div class="container">
+      <p class="section-label">Case Studies</p>
+
+      <div class="case-study">
+        <div class="cs-header">
+          <div class="cs-meta">
+            <span class="cs-company">Couchsurfing</span>
+            <span class="cs-type">Interview Case Study</span>
+          </div>
+          <h3 class="cs-title">Host availability is down 20% in Paris. Why?</h3>
+          <p class="cs-overview">
+            Couchsurfing saw a 20% drop in host availability in Paris — fewer new sign-ups and
+            reduced engagement from existing hosts. The task: diagnose the root cause, define
+            the critical issue, and design a product response.
+          </p>
+        </div>
+
+        <details class="cs-details">
+          <summary>Read the full case study</summary>
+          <div class="cs-body">
+
+            <div class="cs-section">
+              <p class="cs-section-label">Approach</p>
+              <p class="cs-section-text">Started with a PESTEL analysis, following threads that had clear causal evidence rather than surface-level correlation. Three root cause buckets emerged:</p>
+              <ul class="cs-bullets">
+                <li>Members less aligned with the platform's foundational values — creating friction and bad host experiences</li>
+                <li>Increased cost of living driving some hosts toward commercial alternatives (Airbnb)</li>
+                <li>Regulatory pressures in Paris limiting short-term hosting</li>
+              </ul>
+            </div>
+
+            <div class="cs-section">
+              <p class="cs-section-label">Critical Issue</p>
+              <p class="cs-section-text">
+                Hosts are burning out from mismatched, low-effort guests who don't share the spirit of
+                cultural exchange — they just want a free bed. Hosts are the backbone of Couchsurfing:
+                if they don't feel safe, respected, or culturally aligned, they leave. Low-quality guest
+                requests create emotional friction that erodes trust in the platform over time.
+              </p>
+            </div>
+
+            <div class="cs-section">
+              <p class="cs-section-label">Solution — Host Preference Controls</p>
+              <p class="cs-section-text">Give hosts tools to filter guest requests based on their own preferences — reducing mismatched requests, lowering emotional burnout, and restoring a sense of safety and control.</p>
+              <ul class="cs-bullets">
+                <li><strong>Guest request preferences:</strong> hosts filter incoming requests by number of references, languages, shared interests, and countries visited</li>
+                <li><strong>Pre-set host questions:</strong> hosts define up to 5 required questions guests must answer before submitting a request — screens out copy-paste messages and confirms the guest read the host's profile</li>
+              </ul>
+            </div>
+
+            <div class="cs-section">
+              <p class="cs-section-label">Launch Plan</p>
+              <div class="cs-phases">
+                <div class="cs-phase">
+                  <p class="cs-phase-label">Phase 1 — MVP</p>
+                  <p class="cs-phase-text">Guest request preferences, one open-text host question, request match % shown to hosts. Limited availability with a marketing re-engagement campaign.</p>
+                </div>
+                <div class="cs-phase">
+                  <p class="cs-phase-label">Phase 2 — GA</p>
+                  <p class="cs-phase-text">Up to 5 host questions, mutual auto-filter (optional setting), full rollout with updated support docs and team training.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <p class="cs-section-label">Success Metrics</p>
+              <div class="cs-metrics-row">
+                <div class="cs-metric">
+                  <p class="cs-metric-type">Primary</p>
+                  Higher request approval rate (requests → acceptances)
+                </div>
+                <div class="cs-metric">
+                  <p class="cs-metric-type">Primary</p>
+                  Decrease in host churn in Paris
+                </div>
+                <div class="cs-metric">
+                  <p class="cs-metric-type">Guardrail</p>
+                  No significant drop in total guest requests sent
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-section">
+              <p class="cs-section-label">Long-term Idea</p>
+              <p class="cs-section-text">
+                Couchsurfing Karma Program — recognize and celebrate hosts who embody the spirit of
+                cultural exchange through badges, milestones, and non-monetary perks. Goal: create
+                a sense of value, purpose, and social recognition for hosts without relying on
+                financial incentives.
+              </p>
+            </div>
+
+          </div>
+        </details>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills">
+    <div class="container">
+      <p class="section-label">Skills</p>
+      <div class="skills-groups">
+        <div>
+          <p class="skills-group-label">Product</p>
+          <div class="skills-tags">
+            <span class="tag">API Product Management</span>
+            <span class="tag">Product Strategy &amp; Roadmap</span>
+            <span class="tag">Developer UX</span>
+            <span class="tag">Technical PM</span>
+            <span class="tag">Product Lifecycle Management</span>
+            <span class="tag">SaaS</span>
+            <span class="tag">OKRs</span>
+            <span class="tag">Cross-functional Leadership</span>
+          </div>
+        </div>
+        <div>
+          <p class="skills-group-label">Video &amp; Streaming</p>
+          <div class="skills-tags">
+            <span class="tag">HLS / DASH / CMAF</span>
+            <span class="tag">RTMP / WebRTC</span>
+            <span class="tag">Multi-CDN Management</span>
+            <span class="tag">DRM (multi-DRM)</span>
+            <span class="tag">SSAI</span>
+            <span class="tag">Transcoding</span>
+            <span class="tag">H.264 / H.265</span>
+            <span class="tag">CDN Edge Compute (Fastly)</span>
+          </div>
+        </div>
+        <div>
+          <p class="skills-group-label">Technical</p>
+          <div class="skills-tags">
+            <span class="tag">Ruby on Rails</span>
+            <span class="tag">SQL</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Java</span>
+            <span class="tag">Jira / Confluence</span>
+            <span class="tag">BigQuery</span>
+            <span class="tag">PostHog</span>
+            <span class="tag">DataDog</span>
+          </div>
+        </div>
+        <div>
+          <p class="skills-group-label">AI</p>
+          <div class="skills-tags">
+            <span class="tag">RAG</span>
+            <span class="tag">Tool Use / Function Calling</span>
+            <span class="tag">Prompt Engineering</span>
+            <span class="tag">Agent Products</span>
+            <span class="tag">Model Evaluation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section id="education">
+    <div class="container">
+      <p class="section-label">Education</p>
+      <div class="edu-item">
+        <div class="edu-degree">Master of Business Administration (MBA)</div>
+        <div class="edu-school">Universidad de Guadalajara · 2025</div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">Bachelor's Degree in Software Engineering</div>
+        <div class="edu-school">Universidad Autónoma de Yucatán · 2012</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LinkedIn Posts -->
+  <section id="writing">
+    <div class="container">
+      <p class="section-label">Writing</p>
+      <div class="posts-grid">
+        <div class="post-card">
+          <div class="post-date">May 27, 2026</div>
+          <div class="post-text">shower thought...
+
+I've seen a lot of products lately where the answer to every user problem is: "we have an AI agent for that". More context grounding. Better RAG. More tools. More function calls.
+
+And sometimes that's right. But we're often reaching for the most sophisticated tool in the toolbox before asking the simpler question: should AI own this outcome at all?
+
+The real PM skill in an AI-native world isn't knowing how to spec an agent. It's knowing when not to.
+
+AI maximalism isn't a product strategy. Selectivity is.
+
+The new product judgment isn't "how do I add AI to this?" — it's "what should AI actually own here, and what falls apart if it does?"
+
+——
+
+What's your mental model for deciding what goes to AI vs. stays deterministic?</div>
+          <a class="post-link" href="https://www.linkedin.com/posts/vivpalacios_shower-thought-ive-seen-a-lot-of-products-share-7465226961406115841-wvgf/" target="_blank" rel="noopener">Read on LinkedIn ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>Viviana Palacios · San Francisco, CA · <a class="contact-link" style="display:inline" href="mailto:viv.delrio@gmail.com">viv.delrio@gmail.com</a></p>
+    </div>
+  </footer>
+
+</body>
+</html>

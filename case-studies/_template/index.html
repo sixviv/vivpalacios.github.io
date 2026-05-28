@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Case Study — Couchsurfing | Viviana Palacios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --subtle: #e8e6e1;
+      --accent: #2d6a4f;
+      --accent-light: #f0f7f4;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Password gate ── */
+    .gate {
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 24px;
+    }
+
+    .gate-card {
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+
+    .gate-lock {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .gate-lock svg { width: 22px; height: 22px; color: var(--accent); }
+
+    .gate-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .gate-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .gate-subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .gate-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .gate-input {
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: var(--font);
+      border: 1px solid var(--subtle);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .gate-input:focus { border-color: var(--accent); }
+
+    .gate-btn {
+      padding: 12px;
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .gate-btn:hover { opacity: 0.88; }
+
+    .gate-error {
+      font-size: 13px;
+      color: #c0392b;
+      margin-top: 8px;
+    }
+
+    /* ── Content (hidden until unlocked) ── */
+    .content { display: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(250, 250, 249, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--subtle);
+      z-index: 100;
+    }
+
+    nav .inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+
+    .nav-back {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    .nav-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 64px 0 52px;
+      border-bottom: 1px solid var(--subtle);
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-company-tag {
+      background: var(--subtle);
+      color: var(--muted);
+      border-radius: 3px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 300;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .hero-title strong { font-weight: 600; }
+
+    .hero-summary {
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 640px;
+    }
+
+    /* ── Sections ── */
+    .cs-section {
+      padding: 52px 0;
+      border-bottom: 1px solid var(--subtle);
+    }
+    .cs-section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .section-text {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text);
+      max-width: 720px;
+    }
+
+    .section-text + .section-text { margin-top: 14px; }
+
+    /* ── Bullets ── */
+    .bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 16px;
+      max-width: 720px;
+    }
+
+    .bullets li {
+      font-size: 15px;
+      color: var(--text);
+      padding-left: 18px;
+      position: relative;
+      line-height: 1.65;
+    }
+
+    .bullets li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: #c4bdb5;
+    }
+
+    /* ── Callout (critical issue) ── */
+    .callout {
+      background: var(--accent-light);
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 20px 24px;
+      margin-top: 16px;
+      max-width: 720px;
+    }
+
+    .callout p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text);
+    }
+
+    /* ── Two-col features ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .feature-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .feature-bullets {
+      list-style: none;
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .feature-bullets li {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.55;
+    }
+
+    .feature-bullets li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* ── Phases ── */
+    .phases-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .phase-card {
+      background: var(--bg);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .phase-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .phase-text {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* ── Metrics ── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .metric-card {
+      background: var(--accent-light);
+      border-radius: 6px;
+      padding: 16px;
+    }
+
+    .metric-type {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .metric-text {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid var(--subtle);
+    }
+
+    .footer p {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      .features-grid,
+      .phases-grid,
+      .metrics-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Password gate -->
+  <div class="gate" id="gate">
+    <div class="gate-card">
+      <div class="gate-lock">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <p class="gate-eyebrow">Viviana Palacios</p>
+      <h1 class="gate-title">Case Study</h1>
+      <p class="gate-subtitle">This document is password-protected.</p>
+      <form class="gate-form" id="gate-form">
+        <input class="gate-input" type="password" id="gate-input" placeholder="Enter password" autocomplete="current-password" autofocus />
+        <button class="gate-btn" type="submit">Unlock</button>
+      </form>
+      <p class="gate-error" id="gate-error" style="display:none">Incorrect password. Try again.</p>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="content" id="content">
+
+    <nav>
+      <div class="inner">
+        <a class="nav-back" href="/">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+          Viviana Palacios
+        </a>
+        <span class="nav-label">Case Study</span>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+      <div class="container">
+        <div class="hero-eyebrow">
+          Case Study
+          <span class="hero-company-tag">Couchsurfing</span>
+        </div>
+        <h2 class="hero-title">Host availability is down<br><strong>20% in Paris. Why?</strong></h2>
+        <p class="hero-summary">
+          Couchsurfing saw a 20% drop in host availability in Paris — fewer new sign-ups and
+          reduced engagement from existing hosts. The task: diagnose the root cause, define
+          the critical issue, and design a product response.
+        </p>
+      </div>
+    </div>
+
+    <!-- Approach -->
+    <div class="cs-section">
+      <div class="container">
+        <p class="section-label">Approach</p>
+        <p class="section-text">Started with a PESTEL analysis, following threads that had clear causal evidence rather than surface-level correlation. Three root cause buckets emerged:</p>
+        <ul class="bullets">
+          <li>Members less aligned with the platform's foundational values — creating friction and bad host experiences</li>
+          <li>Increased cost of living driving some hosts toward commercial alternatives (Airbnb)</li>
+          <li>Regulatory pressures in Paris limiting short-term hosting</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Critical Issue -->
+    <div class="cs-section">
+      <div class="container">
+        <p class="section-label">Critical Issue</p>
+        <p class="section-text">Of the three root causes, the one product can directly address is the values misalignment.</p>
+        <div class="callout">
+          <p>Hosts are burning out from mismatched, low-effort guests who don't share the spirit of cultural exchange — they just want a free bed. Hosts are the backbone of Couchsurfing: if they don't feel safe, respected, or culturally aligned, they leave. Low-quality guest requests create emotional friction that erodes trust in the platform over time.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Solution -->
+    <div class="cs-section">
+      <div class="container">
+        <p class="section-label">Solution — Host Preference Controls</p>
+        <p class="section-text">Give hosts tools to manage and filter guest requests based on their own preferences — reducing mismatched requests, lowering emotional burnout, and restoring a sense of safety and control.</p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <p class="feature-name">Guest Request Preferences</p>
+            <p class="feature-desc">Hosts filter incoming requests based on configurable criteria.</p>
+            <ul class="feature-bullets">
+              <li>Minimum number of references</li>
+              <li>Languages spoken</li>
+              <li>Up to 5 shared interests</li>
+              <li>Countries visited</li>
+              <li>Show request match % to host</li>
+            </ul>
+          </div>
+          <div class="feature-card">
+            <p class="feature-name">Pre-set Host Questions</p>
+            <p class="feature-desc">Hosts define required questions guests must answer before submitting a request.</p>
+            <ul class="feature-bullets">
+              <li>Up to 5 custom questions (CRUD)</li>
+              <li>Guest can't submit without answering</li>
+              <li>Host reviews answers before accepting</li>
+              <li>Screens out copy-paste requests</li>
+              <li>Confirms guest read host's profile</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Launch -->
+    <div class="cs-section">
+      <div class="container">
+        <p class="section-label">Launch Plan</p>
+        <div class="phases-grid">
+          <div class="phase-card">
+            <p class="phase-label">Phase 1 — MVP (Limited Availability)</p>
+            <p class="phase-text">Guest request preferences, one open-text host question, request match % shown to hosts. Marketing re-engagement campaign: "You're in control again."</p>
+          </div>
+          <div class="phase-card">
+            <p class="phase-label">Phase 2 — GA</p>
+            <p class="phase-text">Up to 5 host questions, mutual auto-filter (optional), full rollout. Updated help center docs and support team training for smooth handoff.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Metrics -->
+    <div class="cs-section">
+      <div class="container">
+        <p class="section-label">Success Metrics</p>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <p class="metric-type">Primary</p>
+            <p class="metric-text">Higher request approval rate (requests → acceptances)</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-type">Primary</p>
+            <p class="metric-text">Decrease in host churn in Paris</p>
+          </div>
+          <div class="metric-card">
+            <p class="metric-type">Guardrail</p>
+            <p class="metric-text">No significant drop in total guest requests sent</p>
+          </div>
+        </div>
+        <p class="section-text" style="margin-top: 20px; font-size: 14px; color: var(--muted);">
+          Validated through soft launch A/B testing, surveys, and user interviews. Tracked via avg requests per host and acceptance ratio per high-volume city.
+        </p>
+      </div>
+    </div>
+
+    <!-- Long-term -->
+    <div class="cs-section">
+      <div class="container">
+        <p class="section-label">Long-term Idea</p>
+        <p class="section-text">
+          <strong>Couchsurfing Karma Program</strong> — recognize and celebrate hosts who embody the spirit of
+          cultural exchange through badges, milestones, and non-monetary perks. Goal: create a sense of value,
+          purpose, and social recognition for hosts without relying on financial incentives.
+        </p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+        <p><a href="/">Viviana Palacios</a> · Senior Product Manager · <a href="mailto:viv.delrio@gmail.com">viv.delrio@gmail.com</a></p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // SHA-256 of the password for this study.
+    // To set a new password: echo -n "yourpassword" | shasum -a 256
+    const PASSWORD_HASH = 'b556f4213c1c15d90509bb36d5cbb80eda7bf24fbd7367dcaa677711d4427afb';
+
+    async function sha256(str) {
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    function unlock() {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+    }
+
+    // Check session on load
+    (async () => {
+      if (sessionStorage.getItem('cs-auth') === PASSWORD_HASH) unlock();
+    })();
+
+    document.getElementById('gate-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const val = document.getElementById('gate-input').value;
+      const hash = await sha256(val);
+      if (hash === PASSWORD_HASH) {
+        sessionStorage.setItem('cs-auth', hash);
+        unlock();
+      } else {
+        document.getElementById('gate-error').style.display = 'block';
+        document.getElementById('gate-input').value = '';
+        document.getElementById('gate-input').focus();
+      }
+    });
+  </script>
+
+</body>
+</html>

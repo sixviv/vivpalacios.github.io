@@ -91,6 +91,13 @@
       border-bottom: 1px solid var(--subtle);
     }
 
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+
     .eyebrow {
       font-size: 12px;
       font-weight: 500;
@@ -114,11 +121,41 @@
       font-size: 17px;
       line-height: 1.75;
       color: var(--muted);
-      max-width: 600px;
       margin-bottom: 36px;
     }
 
     .hero-bio p + p { margin-top: 16px; }
+
+    .hero-photo-wrapper {
+      position: sticky;
+      top: 80px;
+    }
+
+    .hero-photo {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      object-position: top center;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .hero-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: var(--subtle);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    @media (max-width: 720px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-photo-wrapper { position: static; order: -1; max-width: 220px; }
+    }
 
     .contact-row {
       display: flex;
@@ -153,6 +190,15 @@
       text-transform: uppercase;
       color: var(--accent);
       margin-bottom: 40px;
+    }
+
+    /* ── Section intro ── */
+    .section-intro {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 640px;
+      margin-top: -20px;
     }
 
     /* ── Experience ── */
@@ -549,7 +595,7 @@
         <li><a href="#experience">Experience</a></li>
         <li><a href="#case-studies">Case Studies</a></li>
         <li><a href="#education">Education</a></li>
-        <li><a href="#writing">Writing</a></li>
+        <li><a href="#writing">Product Thinking</a></li>
       </ul>
     </div>
   </nav>
@@ -557,56 +603,66 @@
   <!-- Hero -->
   <section id="hero">
     <div class="container">
-      <p class="eyebrow">Senior Product Manager</p>
-      <h1>I build products<br>at the <strong>infrastructure layer.</strong></h1>
-      <div class="hero-bio">
-        <p>
-          I started my career as a software engineer — four years building production systems in Ruby,
-          Java, and Android. I wasn't in a hurry to leave. Understanding how things actually work from
-          the inside felt like a prerequisite, not a detour.
-        </p>
-        <p>
-          From there I moved into project management — not because it was the next rung, but because
-          I was working toward product and knew I needed to understand delivery, cross-functional dynamics,
-          and client relationships before I could own strategy. I also went back for an MBA, because
-          the business side of product — positioning, market strategy, the commercial layer —
-          was something I wanted to understand properly, not approximate.
-        </p>
-        <p>
-          Six years into product management, I work at the intersection of developer experience and
-          infrastructure: which capabilities belong on the API surface, how the response contract should
-          be structured, which use cases warrant a streaming interface over REST, and where exposing too
-          much complexity breaks the developer experience. That's the work at Brightcove, Wowza, and Oracle.
-          That's the work I want to keep doing.
-        </p>
-        <p>
-          Based in San Francisco. Open to senior PM roles in API platforms, developer tools, and
-          B2B infrastructure.
-        </p>
-      </div>
-      <div class="contact-row">
-        <a class="contact-link" href="mailto:viv.delrio@gmail.com">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"/>
-            <path d="m2 7 10 7 10-7"/>
-          </svg>
-          viv.delrio@gmail.com
-        </a>
-        <a class="contact-link" href="https://linkedin.com/in/vivianapalacios" target="_blank" rel="noopener">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-            <rect x="2" y="9" width="4" height="12"/>
-            <circle cx="4" cy="4" r="2"/>
-          </svg>
-          linkedin.com/in/vivianapalacios
-        </a>
-        <span class="contact-link">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/>
-            <circle cx="12" cy="10" r="3"/>
-          </svg>
-          San Francisco, CA
-        </span>
+      <div class="hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow">Senior Product Manager</p>
+          <h1>I build products<br>at the <strong>infrastructure layer.</strong></h1>
+          <div class="hero-bio">
+            <p>
+              I started my career as a software engineer — four years building production systems in Ruby,
+              Java, and Android. I wasn't in a hurry to leave. Understanding how things actually work from
+              the inside felt like a prerequisite, not a detour.
+            </p>
+            <p>
+              From there I moved into project management — not because it was the next rung, but because
+              I was working toward product and knew I needed to understand delivery, cross-functional dynamics,
+              and client relationships before I could own strategy. I also went back for an MBA, because
+              the business side of product — positioning, market strategy, the commercial layer —
+              was something I wanted to understand properly, not approximate.
+            </p>
+            <p>
+              Six years into product management, I work at the intersection of developer experience and
+              infrastructure: which capabilities belong on the API surface, how the response contract should
+              be structured, which use cases warrant a streaming interface over REST, and where exposing too
+              much complexity breaks the developer experience. That's the work at Brightcove, Wowza, and Oracle.
+              That's the work I want to keep doing.
+            </p>
+            <p>
+              Based in San Francisco. Open to senior PM roles in API platforms, developer tools, and
+              B2B infrastructure.
+            </p>
+          </div>
+          <div class="contact-row">
+            <a class="contact-link" href="mailto:viv.delrio@gmail.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                <path d="m2 7 10 7 10-7"/>
+              </svg>
+              viv.delrio@gmail.com
+            </a>
+            <a class="contact-link" href="https://linkedin.com/in/vivianapalacios" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                <rect x="2" y="9" width="4" height="12"/>
+                <circle cx="4" cy="4" r="2"/>
+              </svg>
+              linkedin.com/in/vivianapalacios
+            </a>
+            <span class="contact-link">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+              San Francisco, CA
+            </span>
+          </div>
+        </div>
+        <div class="hero-photo-wrapper">
+          <!-- Replace photo.jpg with your actual filename once added to this folder -->
+          <img class="hero-photo" src="photo.jpg" alt="Viviana Palacios"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+          <div class="hero-photo-placeholder" style="display:none">Photo coming soon</div>
+        </div>
       </div>
     </div>
   </section>
@@ -738,99 +794,7 @@
   <section id="case-studies">
     <div class="container">
       <p class="section-label">Case Studies</p>
-
-      <div class="case-study">
-        <div class="cs-header">
-          <div class="cs-meta">
-            <span class="cs-company">Couchsurfing</span>
-            <span class="cs-type">Interview Case Study</span>
-          </div>
-          <h3 class="cs-title">Host availability is down 20% in Paris. Why?</h3>
-          <p class="cs-overview">
-            Couchsurfing saw a 20% drop in host availability in Paris — fewer new sign-ups and
-            reduced engagement from existing hosts. The task: diagnose the root cause, define
-            the critical issue, and design a product response.
-          </p>
-        </div>
-
-        <details class="cs-details">
-          <summary>Read the full case study</summary>
-          <div class="cs-body">
-
-            <div class="cs-section">
-              <p class="cs-section-label">Approach</p>
-              <p class="cs-section-text">Started with a PESTEL analysis, following threads that had clear causal evidence rather than surface-level correlation. Three root cause buckets emerged:</p>
-              <ul class="cs-bullets">
-                <li>Members less aligned with the platform's foundational values — creating friction and bad host experiences</li>
-                <li>Increased cost of living driving some hosts toward commercial alternatives (Airbnb)</li>
-                <li>Regulatory pressures in Paris limiting short-term hosting</li>
-              </ul>
-            </div>
-
-            <div class="cs-section">
-              <p class="cs-section-label">Critical Issue</p>
-              <p class="cs-section-text">
-                Hosts are burning out from mismatched, low-effort guests who don't share the spirit of
-                cultural exchange — they just want a free bed. Hosts are the backbone of Couchsurfing:
-                if they don't feel safe, respected, or culturally aligned, they leave. Low-quality guest
-                requests create emotional friction that erodes trust in the platform over time.
-              </p>
-            </div>
-
-            <div class="cs-section">
-              <p class="cs-section-label">Solution — Host Preference Controls</p>
-              <p class="cs-section-text">Give hosts tools to filter guest requests based on their own preferences — reducing mismatched requests, lowering emotional burnout, and restoring a sense of safety and control.</p>
-              <ul class="cs-bullets">
-                <li><strong>Guest request preferences:</strong> hosts filter incoming requests by number of references, languages, shared interests, and countries visited</li>
-                <li><strong>Pre-set host questions:</strong> hosts define up to 5 required questions guests must answer before submitting a request — screens out copy-paste messages and confirms the guest read the host's profile</li>
-              </ul>
-            </div>
-
-            <div class="cs-section">
-              <p class="cs-section-label">Launch Plan</p>
-              <div class="cs-phases">
-                <div class="cs-phase">
-                  <p class="cs-phase-label">Phase 1 — MVP</p>
-                  <p class="cs-phase-text">Guest request preferences, one open-text host question, request match % shown to hosts. Limited availability with a marketing re-engagement campaign.</p>
-                </div>
-                <div class="cs-phase">
-                  <p class="cs-phase-label">Phase 2 — GA</p>
-                  <p class="cs-phase-text">Up to 5 host questions, mutual auto-filter (optional setting), full rollout with updated support docs and team training.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="cs-section">
-              <p class="cs-section-label">Success Metrics</p>
-              <div class="cs-metrics-row">
-                <div class="cs-metric">
-                  <p class="cs-metric-type">Primary</p>
-                  Higher request approval rate (requests → acceptances)
-                </div>
-                <div class="cs-metric">
-                  <p class="cs-metric-type">Primary</p>
-                  Decrease in host churn in Paris
-                </div>
-                <div class="cs-metric">
-                  <p class="cs-metric-type">Guardrail</p>
-                  No significant drop in total guest requests sent
-                </div>
-              </div>
-            </div>
-
-            <div class="cs-section">
-              <p class="cs-section-label">Long-term Idea</p>
-              <p class="cs-section-text">
-                Couchsurfing Karma Program — recognize and celebrate hosts who embody the spirit of
-                cultural exchange through badges, milestones, and non-monetary perks. Goal: create
-                a sense of value, purpose, and social recognition for hosts without relying on
-                financial incentives.
-              </p>
-            </div>
-
-          </div>
-        </details>
-      </div>
+      <p class="section-intro">Detailed product case studies covering discovery, prioritization, solution design, and metrics. Coming soon.</p>
 
     </div>
   </section>
@@ -908,11 +872,12 @@
     </div>
   </section>
 
-  <!-- LinkedIn Posts -->
+  <!-- Product Thinking -->
   <section id="writing">
     <div class="container">
-      <p class="section-label">Writing</p>
-      <div class="posts-grid">
+      <p class="section-label">Product Thinking</p>
+      <p class="section-intro">I use LinkedIn as a thinking space, not a highlight reel. The posts here are ideas I couldn't stop turning over after a product decision, a customer conversation, or a pattern I kept seeing across teams. I share them to pressure-test the thinking with my network — not to broadcast conclusions, but to open the discussion. If something resonates or you disagree, I want to hear it.</p>
+      <div class="posts-grid" style="margin-top: 32px;">
         <div class="post-card">
           <div class="post-date">May 27, 2026</div>
           <div class="post-text">shower thought...

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>One Platform — Viviana Palacios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --subtle: #e8e6e1;
+      --accent: #2d6a4f;
+      --accent-light: #f0f7f4;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(250, 250, 249, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--subtle);
+      z-index: 100;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-back {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--accent); }
+    .nav-name {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ── Header ── */
+    .cs-header {
+      padding: 80px 0 64px;
+      border-bottom: 1px solid var(--subtle);
+    }
+    .cs-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .cs-title {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .cs-title strong { font-weight: 600; }
+    .cs-lead {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 36px;
+    }
+    .cs-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .cs-tag {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 4px;
+      padding: 4px 10px;
+    }
+
+    /* ── Sections ── */
+    .section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--subtle);
+    }
+    .section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    /* ── Prose card ── */
+    .prose {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 32px;
+    }
+    .prose p { font-size: 15px; line-height: 1.75; color: var(--text); }
+    .prose p + p { margin-top: 16px; }
+    .prose strong { font-weight: 600; }
+
+    /* ── Quote ── */
+    .quote-block {
+      border-left: 3px solid var(--accent);
+      padding: 16px 20px;
+      background: var(--accent-light);
+      border-radius: 0 8px 8px 0;
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text);
+      margin-top: 20px;
+      line-height: 1.7;
+    }
+
+    /* ── Journey ── */
+    .journey {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 24px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .journey-step {
+      flex: 1;
+      min-width: 120px;
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      padding: 20px 16px;
+      text-align: center;
+    }
+    .journey-step:first-child { border-radius: 8px 0 0 8px; }
+    .journey-step:last-child { border-radius: 0 8px 8px 0; }
+    .journey-step + .journey-step { border-left: none; }
+    .journey-step.active {
+      background: var(--accent-light);
+      border-color: var(--accent);
+    }
+    .js-icon { font-size: 22px; margin-bottom: 8px; }
+    .js-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .js-label { font-size: 11px; color: var(--muted); line-height: 1.4; }
+    .journey-step.active .js-title { color: var(--accent); }
+
+    /* ── Persona cards ── */
+    .personas-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .persona-card {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 24px;
+      border-top: 3px solid var(--subtle);
+    }
+    .persona-card.highlighted { border-top-color: var(--accent); }
+    .persona-icon { font-size: 24px; margin-bottom: 12px; }
+    .persona-card h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .persona-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .persona-pain {
+      margin-top: 12px;
+      font-size: 12px;
+      font-style: italic;
+      color: var(--accent);
+      line-height: 1.5;
+    }
+
+    /* ── Steps ── */
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      display: flex;
+      gap: 24px;
+      padding: 28px 32px;
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+    }
+    .step:first-child { border-radius: 8px 8px 0 0; }
+    .step:last-child { border-radius: 0 0 8px 8px; }
+    .step + .step { border-top: none; }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-body h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .step-body p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ── Root causes ── */
+    .causes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .cause-card {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 22px 24px;
+    }
+    .cause-card.critical {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .cause-card h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .cause-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .critical-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+
+    /* ── Feature cards ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .feature-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .feature-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .feature-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Metrics ── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .metric-group {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 24px 28px;
+    }
+    .metric-group-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .metric-group.success .metric-group-label { color: #2e7d32; }
+    .metric-group.risk .metric-group-label { color: #c62828; }
+    .metric-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .metric-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .success .metric-dot { background: #2e7d32; }
+    .risk .metric-dot { background: #c62828; }
+
+    /* ── Phases ── */
+    .phases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .phase-card {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .phase-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .phase-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .phase-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .phase-card li {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.55;
+    }
+    .phase-card li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--subtle);
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid var(--subtle);
+    }
+    footer p { font-size: 13px; color: var(--muted); }
+
+    /* ── Responsive ── */
+    @media (max-width: 720px) {
+      .personas-grid { grid-template-columns: 1fr; }
+      .causes-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .phases-grid { grid-template-columns: 1fr; }
+      .container { padding: 0 20px; }
+      .journey { flex-direction: column; }
+      .journey-step { border-radius: 8px !important; border: 1px solid var(--subtle) !important; margin-bottom: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a class="nav-back" href="/">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Viviana Palacios
+      </a>
+      <span class="nav-name">Case Study</span>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <div class="cs-header">
+    <div class="container">
+      <p class="cs-eyebrow">Product Case Study · SaaS Platform Strategy</p>
+      <h1 class="cs-title">One Platform: Bridging<br><strong>On-Premise and Cloud</strong></h1>
+      <p class="cs-lead">How I identified a retention risk among on-premise customers and led the product initiative that enabled them to access cloud capabilities — increasing cross-product adoption and reducing churn.</p>
+      <div class="cs-tags">
+        <span class="cs-tag">Customer Retention</span>
+        <span class="cs-tag">Enterprise SaaS</span>
+        <span class="cs-tag">Platform Strategy</span>
+        <span class="cs-tag">Live Streaming</span>
+        <span class="cs-tag">Cross-Product Adoption</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Context -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">01 · Context</p>
+      <h2 class="section-title">Two Products, One Fragmented Customer Base</h2>
+      <div class="prose" style="margin-bottom: 20px;">
+        <p>A live streaming platform operated two parallel product lines: a legacy on-premise solution used by established enterprise customers, and a newer cloud-based SaaS OVP built with modern capabilities. The two products existed independently — customers were on one or the other, never both. As the cloud product matured, it widened the capability gap: cloud customers got faster delivery of new features while on-premise customers watched their solution fall behind.</p>
+      </div>
+      <div class="journey">
+        <div class="journey-step">
+          <div class="js-icon">🖥️</div>
+          <div class="js-title">On-Premise Customer</div>
+          <div class="js-label">Existing infrastructure, long contract cycles</div>
+        </div>
+        <div class="journey-step">
+          <div class="js-icon">🚧</div>
+          <div class="js-title">Capability Gap</div>
+          <div class="js-label">Cloud features unavailable to on-prem users</div>
+        </div>
+        <div class="journey-step active">
+          <div class="js-icon">⚠️</div>
+          <div class="js-title">Churn Risk</div>
+          <div class="js-label">Customers consider switching to cloud-native competitors</div>
+        </div>
+        <div class="journey-step">
+          <div class="js-icon">🌉</div>
+          <div class="js-title">Bridge Initiative</div>
+          <div class="js-label">Enable cloud features for on-prem customers</div>
+        </div>
+        <div class="journey-step">
+          <div class="js-icon">✅</div>
+          <div class="js-title">Retained + Expanded</div>
+          <div class="js-label">Cross-product adoption, reduced churn</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Problem -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">02 · Problem Statement</p>
+      <h2 class="section-title">The Challenge</h2>
+      <div class="prose">
+        <p>On-premise customers represented significant ARR but faced a structural disadvantage: every new cloud-native capability was unavailable to them. Their alternatives were either migrating entirely to cloud (high cost, high disruption for established enterprise environments) or switching to a competitor who could offer a hybrid path.</p>
+        <p><strong>Why it matters:</strong> Losing an on-premise enterprise customer isn't just lost revenue — it's a signal that the platform is treating a segment as legacy rather than investing in its longevity. In a competitive market, that signal travels.</p>
+        <div class="quote-block">
+          "On-premise customers had made infrastructure investments in our platform. The product's job was to honor that investment while giving them a path forward — not forcing them to choose between our cloud product and a competitor."
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Customer Research -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">03 · Customer Research</p>
+      <h2 class="section-title">Who We Were Talking To</h2>
+      <div class="personas-grid">
+        <div class="persona-card highlighted">
+          <div class="persona-icon">🏢</div>
+          <h4>Enterprise On-Prem Customer</h4>
+          <p>Large organization with existing infrastructure investment and long procurement cycles. Wants access to cloud features without a full migration.</p>
+          <p class="persona-pain">"We need cloud encryption support but we can't migrate our whole infrastructure this quarter."</p>
+        </div>
+        <div class="persona-card">
+          <div class="persona-icon">🔄</div>
+          <h4>Hybrid Evaluator</h4>
+          <p>Actively evaluating cloud-native competitors. Would stay if they could access key cloud features without disrupting their on-prem setup.</p>
+          <p class="persona-pain">"Your competitor offers this natively. What's your path?"</p>
+        </div>
+        <div class="persona-card">
+          <div class="persona-icon">📈</div>
+          <h4>Expansion-Ready Customer</h4>
+          <p>Has grown beyond on-prem capacity and wants to extend to cloud for burst workloads, but doesn't want two separate vendor relationships.</p>
+          <p class="persona-pain">"We'd expand if we could manage both environments from one place."</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Approach -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">04 · Approach</p>
+      <h2 class="section-title">Discovery & Alignment</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>Direct Customer Engagement</h4>
+            <p>Conducted working sessions with on-premise enterprise accounts to map their integration challenges. The goal was to understand which cloud features mattered most and what technical barriers prevented adoption — not to validate a solution we'd already decided on.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>Win/Loss Analysis</h4>
+            <p>Synthesized win/loss data with the marketing team to identify deals where the on-prem/cloud divide was a deciding factor. This surfaced how often competitors were winning by offering hybrid capability out of the box.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Cross-Functional Alignment</h4>
+            <p>Brought engineering, sales, marketing, and support into the framing early. Each team had a different view of the on-prem customer's experience — sales saw churn risk, support saw integration pain, engineering saw technical debt. The initiative needed all four perspectives to define the right scope.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Technical Feasibility Assessment</h4>
+            <p>Worked with engineering to determine which cloud features could be surfaced to on-prem customers via API bridge, which required deeper integration work, and which were architecturally incompatible in the near term. This scoped the MVP without overpromising.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Root Causes -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">05 · Root Causes</p>
+      <h2 class="section-title">Why Customers Were at Risk of Churning</h2>
+      <div class="causes-grid">
+        <div class="cause-card">
+          <h4>Feature Parity Divergence</h4>
+          <p>Cloud product shipped new capabilities faster than they could be backported to on-prem. The gap widened over time with no clear bridge.</p>
+        </div>
+        <div class="cause-card">
+          <h4>No Hybrid Path</h4>
+          <p>Customers who wanted to extend to cloud had to treat it as a separate product — separate contracts, separate integrations, separate support relationships.</p>
+        </div>
+        <div class="cause-card critical">
+          <div class="critical-badge">Critical Focus</div>
+          <h4>Platform Felt Like a Dead End</h4>
+          <p>On-premise customers perceived no investment in their product line. Without a visible roadmap toward cloud feature access, the default conclusion was that the platform was deprioritizing them in favor of cloud-native customers.</p>
+        </div>
+        <div class="cause-card">
+          <h4>Integration Complexity as a Blocker</h4>
+          <p>Even customers who wanted to adopt cloud capabilities faced high integration complexity — two separate APIs, separate authentication, and no unified management interface.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">06 · Solution</p>
+      <h2 class="section-title">A Cloud Feature Access Layer for On-Premise Customers</h2>
+      <div class="prose" style="margin-bottom: 16px;">
+        <p>The initiative enabled on-premise customers to selectively leverage cloud capabilities — specifically content encryption and cloud delivery features — without requiring a full migration. The approach was additive: customers kept their existing on-prem infrastructure while gaining a controlled path to cloud features through a unified integration layer.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-num">01</div>
+          <h4>Cloud Encryption for On-Prem Content</h4>
+          <p>On-premise customers could route content through cloud-based encryption workflows — enabling multi-DRM support without migrating their storage or delivery infrastructure.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">02</div>
+          <h4>Unified Integration Layer</h4>
+          <p>A single API surface bridging on-prem and cloud products. Customers could manage cloud feature configuration from their existing integration without a separate cloud account setup.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">03</div>
+          <h4>Incremental Adoption Model</h4>
+          <p>Customers could adopt individual cloud features independently — not forced into a full cloud migration. Each feature adoption became a natural step toward a fuller hybrid or cloud deployment.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">07 · Metrics</p>
+      <h2 class="section-title">How We Measured Success</h2>
+      <div class="metrics-grid">
+        <div class="metric-group success">
+          <div class="metric-group-label">Success Metrics</div>
+          <div class="metric-item"><div class="metric-dot"></div>On-premise customer churn rate during the initiative window</div>
+          <div class="metric-item"><div class="metric-dot"></div>Cloud feature adoption rate among existing on-prem customers</div>
+          <div class="metric-item"><div class="metric-dot"></div>Cross-product ARR expansion from on-prem accounts adopting cloud features</div>
+          <div class="metric-item"><div class="metric-dot"></div>Time-to-first-cloud-feature for on-prem customers (integration complexity proxy)</div>
+          <div class="metric-item"><div class="metric-dot"></div>Win rate improvement in competitive deals where hybrid capability was a factor</div>
+        </div>
+        <div class="metric-group risk">
+          <div class="metric-group-label">Negative Impact to Watch</div>
+          <div class="metric-item"><div class="metric-dot"></div>Support burden — hybrid integrations increase complexity for the support team handling mixed on-prem/cloud configurations</div>
+          <div class="metric-item"><div class="metric-dot"></div>Migration slowdown — if on-prem customers can access key cloud features, they may defer full cloud migration, reducing cloud ARR growth</div>
+          <div class="metric-item"><div class="metric-dot"></div>Integration fragility — bridge layer becomes a long-term maintenance burden if not properly scoped and owned</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rollout -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">08 · Rollout Strategy</p>
+      <h2 class="section-title">Phased Delivery</h2>
+      <div class="phases-grid">
+        <div class="phase-card">
+          <div class="phase-label">Phase 1 — Targeted</div>
+          <h4>High-Risk Account Cohort</h4>
+          <ul>
+            <li>Identify on-prem accounts showing churn signals (low engagement, competitor evaluation)</li>
+            <li>Prioritized access to cloud encryption feature for this cohort</li>
+            <li>Dedicated onboarding support to reduce integration friction</li>
+            <li>Qualitative feedback loop with each account</li>
+          </ul>
+        </div>
+        <div class="phase-card">
+          <div class="phase-label">Phase 2 — Expand</div>
+          <h4>Broader On-Prem Base</h4>
+          <ul>
+            <li>Expand cloud feature access to all on-prem customers</li>
+            <li>Self-serve integration documentation published</li>
+            <li>Sales enablement update: hybrid capability now a supported sales motion</li>
+            <li>Support team trained on hybrid configuration scenarios</li>
+          </ul>
+        </div>
+        <div class="phase-card">
+          <div class="phase-label">Phase 3 — Mature</div>
+          <h4>Platform Integration</h4>
+          <ul>
+            <li>Hybrid feature access reflected in unified product roadmap</li>
+            <li>Cloud feature adoption tracked in customer health scoring</li>
+            <li>Renewal conversations enriched with usage data from both on-prem and cloud</li>
+            <li>Roadmap communication to on-prem customers restored confidence in platform investment</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outcome -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">09 · Outcome & Learnings</p>
+      <h2 class="section-title">What This Built</h2>
+      <div class="prose">
+        <p>The initiative increased cross-product adoption among on-premise customers and reduced churn in the targeted cohort. But the less quantifiable outcome may have been more important: it restored trust. On-premise customers had begun to feel de-prioritized by a platform that was visibly investing in cloud. Shipping a concrete bridge — and communicating it through the roadmap — sent the signal that the platform was investing in their success, not waiting for them to leave.</p>
+        <p>The key learning: <strong>retention is often a product communication problem before it becomes a product gap problem.</strong> Customers don't churn the day a feature is missing — they churn when they stop believing the missing feature is coming. Closing that belief gap is as important as closing the feature gap.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>Viviana Palacios · <a href="/" style="color: var(--accent); text-decoration: none;">vivianapalacios.com</a></p>
+      <p style="margin-top: 8px; font-size: 11px; color: #b0aca6;">Powered by Claude Code</p>
+    </div>
+  </footer>
+
+</body>
+</html>

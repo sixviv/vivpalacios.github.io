@@ -566,6 +566,88 @@
       .cs-phases { grid-template-columns: 1fr; }
     }
 
+    /* ── Case Study Cards ── */
+    .cs-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cs-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .cs-card {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 28px 32px;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .cs-card-link:hover .cs-card {
+      border-color: var(--accent);
+      box-shadow: 0 2px 12px rgba(45, 106, 79, 0.08);
+    }
+
+    .cs-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .cs-card-company {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--accent);
+    }
+    .cs-card-type {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--subtle);
+      border-radius: 3px;
+      padding: 2px 8px;
+    }
+
+    .cs-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.35;
+    }
+
+    .cs-card-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .cs-card-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .cs-card-stat {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .cs-card-stat strong {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .cs-card-cta {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
     /* ── Footer ── */
     footer {
       padding: 40px 0;
@@ -813,8 +895,44 @@
   <section id="case-studies">
     <div class="container">
       <p class="section-label">Case Studies</p>
-      <p class="section-intro">Detailed product case studies covering discovery, prioritization, solution design, and metrics. Coming soon.</p>
+      <p class="section-intro">Detailed walkthroughs of product problems I've owned — from discovery and risk framing through solution design, metrics, and learnings.</p>
+      <div class="cs-cards" style="margin-top: 36px;">
 
+        <a class="cs-card-link" href="/case-studies/live-at-scale/">
+          <div class="cs-card">
+            <div class="cs-card-meta">
+              <span class="cs-card-company">Brightcove</span>
+              <span class="cs-card-type">Infrastructure PM</span>
+            </div>
+            <h3 class="cs-card-title">Live at Scale: Delivering to 1.8M Concurrent Viewers</h3>
+            <p class="cs-card-desc">How I led product for a high-stakes international live sports stream — orchestrating multi-CDN routing, defining real-time health scoring, and coordinating cross-functional response under pressure.</p>
+            <div class="cs-card-stats">
+              <span class="cs-card-stat"><strong>1.8M</strong> CCU peak</span>
+              <span class="cs-card-stat"><strong>3+</strong> CDN providers</span>
+              <span class="cs-card-stat"><strong>0</strong> unplanned outages</span>
+            </div>
+            <span class="cs-card-cta">Read case study →</span>
+          </div>
+        </a>
+
+        <a class="cs-card-link" href="/case-studies/onprem-to-cloud/">
+          <div class="cs-card">
+            <div class="cs-card-meta">
+              <span class="cs-card-company">Wowza</span>
+              <span class="cs-card-type">Platform Strategy</span>
+            </div>
+            <h3 class="cs-card-title">One Platform: Bridging On-Premise and Cloud for Enterprise Customers</h3>
+            <p class="cs-card-desc">How I identified a retention risk among on-premise enterprise customers and led the initiative that gave them a path to cloud capabilities — without forcing a full migration.</p>
+            <div class="cs-card-stats">
+              <span class="cs-card-stat">Customer retention</span>
+              <span class="cs-card-stat">Cross-product adoption</span>
+              <span class="cs-card-stat">Hybrid architecture</span>
+            </div>
+            <span class="cs-card-cta">Read case study →</span>
+          </div>
+        </a>
+
+      </div>
     </div>
   </section>
 

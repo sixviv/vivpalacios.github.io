@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live at Scale — Viviana Palacios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fafaf9;
+      --surface: #ffffff;
+      --text: #1a1a1a;
+      --muted: #6b6b6b;
+      --subtle: #e8e6e1;
+      --accent: #2d6a4f;
+      --accent-light: #f0f7f4;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(250, 250, 249, 0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--subtle);
+      z-index: 100;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+    }
+    .nav-back {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--accent); }
+    .nav-name {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* ── Header ── */
+    .cs-header {
+      padding: 80px 0 64px;
+      border-bottom: 1px solid var(--subtle);
+    }
+    .cs-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .cs-title {
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 300;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .cs-title strong { font-weight: 600; }
+    .cs-lead {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 36px;
+    }
+    .cs-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .cs-tag {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 4px;
+      padding: 4px 10px;
+    }
+
+    /* ── Stats bar ── */
+    .stats-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--subtle);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 56px 0 0;
+    }
+    .stat-cell {
+      background: var(--accent-light);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.4;
+    }
+
+    /* ── Sections ── */
+    .section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--subtle);
+    }
+    .section:last-child { border-bottom: none; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    /* ── Prose card ── */
+    .prose {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 32px;
+    }
+    .prose p { font-size: 15px; line-height: 1.75; color: var(--text); }
+    .prose p + p { margin-top: 16px; }
+    .prose strong { font-weight: 600; }
+
+    /* ── Steps ── */
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      display: flex;
+      gap: 24px;
+      padding: 28px 32px;
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 0;
+    }
+    .step:first-child { border-radius: 8px 8px 0 0; }
+    .step:last-child { border-radius: 0 0 8px 8px; }
+    .step + .step { border-top: none; }
+    .step-num {
+      width: 32px;
+      height: 32px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-body h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .step-body p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ── Risk grid ── */
+    .risk-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .risk-card {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 22px 24px;
+    }
+    .risk-card.critical {
+      border-color: var(--accent);
+      background: var(--accent-light);
+    }
+    .risk-card h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .risk-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .critical-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: white;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-bottom: 10px;
+    }
+
+    /* ── Feature cards ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .feature-card {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .feature-num {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .feature-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .feature-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Metrics ── */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .metric-group {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 24px 28px;
+    }
+    .metric-group-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .metric-group.success .metric-group-label { color: #2e7d32; }
+    .metric-group.risk .metric-group-label { color: #c62828; }
+    .metric-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.55;
+    }
+    .metric-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+    .success .metric-dot { background: #2e7d32; }
+    .risk .metric-dot { background: #c62828; }
+
+    /* ── Execution phases ── */
+    .phases-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .phase-card {
+      background: var(--surface);
+      border: 1px solid var(--subtle);
+      border-radius: 8px;
+      padding: 24px;
+    }
+    .phase-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .phase-card h4 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .phase-card ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .phase-card li {
+      font-size: 13px;
+      color: var(--muted);
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.55;
+    }
+    .phase-card li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--subtle);
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      border-top: 1px solid var(--subtle);
+    }
+    footer p { font-size: 13px; color: var(--muted); }
+
+    /* ── Responsive ── */
+    @media (max-width: 720px) {
+      .stats-bar { grid-template-columns: 1fr; }
+      .risk-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .phases-grid { grid-template-columns: 1fr; }
+      .container { padding: 0 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a class="nav-back" href="/">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        Viviana Palacios
+      </a>
+      <span class="nav-name">Case Study</span>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <div class="cs-header">
+    <div class="container">
+      <p class="cs-eyebrow">Product Case Study · Video Infrastructure</p>
+      <h1 class="cs-title">Live at Scale: Delivering to<br><strong>1.8M Concurrent Viewers</strong></h1>
+      <p class="cs-lead">How I led product for a high-stakes international live sports stream — balancing delivery reliability, real-time CDN orchestration, and cross-functional coordination under pressure.</p>
+      <div class="cs-tags">
+        <span class="cs-tag">Live Streaming</span>
+        <span class="cs-tag">CDN Strategy</span>
+        <span class="cs-tag">Infrastructure PM</span>
+        <span class="cs-tag">Enterprise</span>
+        <span class="cs-tag">Reliability</span>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-cell">
+          <span class="stat-num">1.8M</span>
+          <span class="stat-label">Concurrent users at peak</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">3+</span>
+          <span class="stat-label">CDN providers orchestrated in real time</span>
+        </div>
+        <div class="stat-cell">
+          <span class="stat-num">0</span>
+          <span class="stat-label">Unplanned outages during the event</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Problem -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">01 · Problem Statement</p>
+      <h2 class="section-title">The Challenge</h2>
+      <div class="prose">
+        <p>An enterprise customer needed to stream a high-profile international soccer match — live, across multiple geographies, at a scale the platform had not previously served from a single event origin. The business risk was significant: a failure or degraded viewing experience at this scale would directly threaten the customer relationship, damage platform reputation, and expose gaps in the infrastructure product.</p>
+        <p><strong>Why it matters:</strong> Live streaming failures are not recoverable in the moment. Unlike VOD, a viewer who hits buffering during a live event cannot "retry" — they leave and don't come back. At 1.8M CCU, even a 1% impact means 18,000 viewers experiencing failure simultaneously.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Approach -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">02 · Approach</p>
+      <h2 class="section-title">Research & Pre-Event Analysis</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <h4>CDN Capacity Forecasting</h4>
+            <p>Worked with engineering and CDN account teams to model expected traffic curves. Analyzed historical CCU data from prior high-traffic events to stress-test our multi-CDN commit tiers and identify potential saturation points per provider.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <h4>SLA & Baseline Benchmarking</h4>
+            <p>Pulled TTFB, cache hit rates, and error rate baselines per CDN provider (Akamai, Edgio, Fastly, CloudFront) across geographies relevant to the event's audience. Established thresholds that would trigger routing adjustments.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <h4>Cross-Functional Alignment</h4>
+            <p>Coordinated with engineering, sales, and the customer's technical team pre-event to define escalation paths, communication cadences, and fallback playbook triggers. Ensured every team knew their role before the stream started.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <h4>Real-Time Monitoring Setup</h4>
+            <p>Defined which signals to watch during the event: throughput per CDN, error rate spikes, TTFB degradation, and segment delivery latency. Configured dashboards so the team could make routing decisions without hunting for data.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Risk -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">03 · Risk Identification</p>
+      <h2 class="section-title">Possible Failure Modes</h2>
+      <div class="risk-grid">
+        <div class="risk-card">
+          <h4>CDN Saturation at Peak Traffic</h4>
+          <p>Any single CDN could hit throughput limits during kickoff or high-tension moments — the moments when viewership spikes fastest.</p>
+        </div>
+        <div class="risk-card">
+          <h4>Geographic Coverage Gaps</h4>
+          <p>South Korea-focused traffic might expose PoP coverage differences between providers, leading to uneven latency across the audience.</p>
+        </div>
+        <div class="risk-card critical">
+          <div class="critical-badge">Critical Focus</div>
+          <h4>Single CDN Dependency</h4>
+          <p>Relying primarily on one provider with no real-time routing fallback would create a single point of failure with no recovery path during the live event.</p>
+        </div>
+        <div class="risk-card">
+          <h4>Playback Errors from Segment Delivery Failures</h4>
+          <p>If delivery failed for even a subset of segments, viewers would experience freezing or rebuffering — with no transparent retry to an alternate source.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solution -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">04 · Solution</p>
+      <h2 class="section-title">Dynamic Multi-CDN Routing with Real-Time Scoring</h2>
+      <div class="prose" style="margin-bottom: 16px;">
+        <p>Rather than treating CDN selection as a static configuration, I worked with engineering to define a multi-signal scoring framework that evaluated CDN health in real time and dynamically shifted traffic to the optimal provider. This meant no single provider failure could take down the event — the platform would route around degradation automatically.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-num">01</div>
+          <h4>Multi-Signal Health Score</h4>
+          <p>Each CDN was continuously scored on real-time throughput, TTFB, cache efficiency, and SLA error rate. Scores updated dynamically to reflect current delivery health.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">02</div>
+          <h4>Traffic Rebalancing Logic</h4>
+          <p>When a CDN's score dropped below threshold, traffic routing shifted toward higher-scoring providers — without viewer interruption or manual intervention.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-num">03</div>
+          <h4>Live Event Dashboard</h4>
+          <p>A real-time view of per-CDN performance during the event, enabling the team to monitor, annotate, and escalate based on observed data rather than guesswork.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metrics -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">05 · Metrics</p>
+      <h2 class="section-title">How We Measured Success</h2>
+      <div class="metrics-grid">
+        <div class="metric-group success">
+          <div class="metric-group-label">Success Metrics</div>
+          <div class="metric-item"><div class="metric-dot"></div>Peak CCU sustained without SLA breach across all CDN providers</div>
+          <div class="metric-item"><div class="metric-dot"></div>TTFB within baseline thresholds at peak traffic moments</div>
+          <div class="metric-item"><div class="metric-dot"></div>Error rate below agreed SLA across geographies</div>
+          <div class="metric-item"><div class="metric-dot"></div>Zero unplanned escalations during the event window</div>
+          <div class="metric-item"><div class="metric-dot"></div>Post-event CDN performance summary delivered to customer</div>
+        </div>
+        <div class="metric-group risk">
+          <div class="metric-group-label">Negative Impact to Watch</div>
+          <div class="metric-item"><div class="metric-dot"></div>Routing instability — frequent switching between CDNs could introduce micro-buffering for some viewers</div>
+          <div class="metric-item"><div class="metric-dot"></div>Over-routing to one CDN if scoring weights aren't balanced, recreating a single-provider dependency</div>
+          <div class="metric-item"><div class="metric-dot"></div>Latency in score updates causing routing decisions to lag behind real delivery degradation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Execution -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">06 · Execution</p>
+      <h2 class="section-title">Rollout & Event Strategy</h2>
+      <div class="phases-grid">
+        <div class="phase-card">
+          <div class="phase-label">Before the Event</div>
+          <h4>Pre-Event Preparation</h4>
+          <ul>
+            <li>Traffic forecast and CDN capacity review with each provider's account team</li>
+            <li>Routing thresholds defined and validated in staging</li>
+            <li>Escalation playbook agreed with customer's technical team</li>
+            <li>Monitoring dashboards tested and ready</li>
+          </ul>
+        </div>
+        <div class="phase-card">
+          <div class="phase-label">During the Event</div>
+          <h4>Live Monitoring</h4>
+          <ul>
+            <li>Real-time CDN health tracking throughout the stream</li>
+            <li>Dynamic traffic rebalancing as CDN scores shifted</li>
+            <li>Continuous cross-team communication cadence</li>
+            <li>Incident triggers on standby with defined ownership</li>
+          </ul>
+        </div>
+        <div class="phase-card">
+          <div class="phase-label">After the Event</div>
+          <h4>Post-Event Review</h4>
+          <ul>
+            <li>CDN performance summary: TTFB, cache efficiency, error rates per provider</li>
+            <li>SLA adherence evaluation for each CDN</li>
+            <li>Delivery optimization recommendations for future events</li>
+            <li>Internal retrospective to improve the scoring framework</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Outcome -->
+  <div class="section">
+    <div class="container">
+      <p class="section-label">07 · Outcome & Learnings</p>
+      <h2 class="section-title">What This Built</h2>
+      <div class="prose">
+        <p>The event completed without outages at 1.8M CCU — but the more durable outcome was the delivery framework we built around it. Dynamic CDN routing became a repeatable capability for future high-scale events. The post-event analysis model became a standard artifact in enterprise customer reviews, strengthening trusted-advisor relationships by demonstrating platform transparency.</p>
+        <p>The key learning: <strong>live event reliability is a product problem as much as an infrastructure problem.</strong> Pre-defining how the system should behave under degradation — not just how to respond after — is what makes scale achievable without heroics.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>Viviana Palacios · <a href="/" style="color: var(--accent); text-decoration: none;">vivianapalacios.com</a></p>
+      <p style="margin-top: 8px; font-size: 11px; color: #b0aca6;">Powered by Claude Code</p>
+    </div>
+  </footer>
+
+</body>
+</html>

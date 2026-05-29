@@ -85,6 +85,45 @@
     }
     .nav-links a:hover { color: var(--text); }
 
+    /* hamburger button — hidden on desktop */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      color: var(--text);
+      line-height: 0;
+    }
+
+    /* mobile nav */
+    @media (max-width: 640px) {
+      .nav-hamburger { display: block; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 56px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: rgba(250, 250, 249, 0.97);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--subtle);
+        padding: 8px 0 12px;
+      }
+
+      .nav-links li a {
+        display: block;
+        padding: 12px 32px;
+        font-size: 14px;
+        color: var(--text);
+      }
+
+      nav.nav-open .nav-links { display: flex; }
+    }
+
     /* ── Hero ── */
     #hero {
       padding: 96px 0 80px;
@@ -670,10 +709,23 @@
 <body>
 
   <!-- Nav -->
-  <nav>
+  <nav id="main-nav">
     <div class="container">
       <a class="nav-name" href="#hero">Viviana Palacios</a>
-      <ul class="nav-links">
+      <button class="nav-hamburger" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <!-- hamburger icon -->
+        <svg id="icon-menu" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+        <!-- close icon -->
+        <svg id="icon-close" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <ul class="nav-links" id="nav-links">
         <li><a href="#case-studies">Case Studies</a></li>
         <li><a href="#writing">Product Thinking</a></li>
         <li><a href="#experience">Experience</a></li>
@@ -681,6 +733,40 @@
       </ul>
     </div>
   </nav>
+
+  <script>
+    (function () {
+      var nav    = document.getElementById('main-nav');
+      var toggle = document.getElementById('nav-toggle');
+      var links  = document.getElementById('nav-links');
+      var iconMenu  = document.getElementById('icon-menu');
+      var iconClose = document.getElementById('icon-close');
+
+      function closeMenu() {
+        nav.classList.remove('nav-open');
+        toggle.setAttribute('aria-expanded', 'false');
+        iconMenu.style.display  = '';
+        iconClose.style.display = 'none';
+      }
+
+      toggle.addEventListener('click', function () {
+        var isOpen = nav.classList.toggle('nav-open');
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        iconMenu.style.display  = isOpen ? 'none' : '';
+        iconClose.style.display = isOpen ? '' : 'none';
+      });
+
+      // close when a nav link is tapped
+      links.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', closeMenu);
+      });
+
+      // close when tapping outside
+      document.addEventListener('click', function (e) {
+        if (!nav.contains(e.target)) closeMenu();
+      });
+    })();
+  </script>
 
   <!-- Hero -->
   <section id="hero">
